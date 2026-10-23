@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Учебная группа</title>
+    <th:block th:replace="~{fragments :: styles}"></th:block>
+</head>
+<body>
+<nav th:replace="~{fragments :: menu('groups')}"></nav>
+<div class="container" style="max-width: 560px">
+    <h3 th:text="${group.id == null} ? 'Новая учебная группа' : 'Изменение учебной группы'">Группа</h3>
+    <hr/>
+    <form th:action="@{/saveGroup}" th:object="${group}" method="post" novalidate>
+        <input type="hidden" th:field="*{id}"/>
+
+        <div class="mb-3">
+            <label class="form-label" for="name">Название группы</label>
+            <input type="text" th:field="*{name}" class="form-control" th:errorclass="is-invalid"
+                   placeholder="например, РИЗ-250213у"/>
+            <div class="invalid-feedback" th:errors="*{name}"></div>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="faculty">Факультет</label>
+            <input type="text" th:field="*{faculty}" class="form-control" th:errorclass="is-invalid"/>
+            <div class="invalid-feedback" th:errors="*{faculty}"></div>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="course">Курс</label>
+            <input type="number" th:field="*{course}" class="form-control" th:errorclass="is-invalid" min="1" max="6"/>
+            <div class="invalid-feedback" th:errors="*{course}"></div>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="curator">Куратор</label>
+            <input type="text" th:field="*{curator}" class="form-control" th:errorclass="is-invalid"/>
+            <div class="invalid-feedback" th:errors="*{curator}"></div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Сохранить</button>
+        <a th:href="@{/groups}" class="btn btn-outline-secondary ms-2">К списку</a>
+    </form>
+</div>
+</body>
+</html>
